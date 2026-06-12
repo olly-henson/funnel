@@ -23,7 +23,7 @@ funnel/
 - **Funnel page path:** `/meditation`
 - **Thank you page path:** `/thank-you`
 - **Form ID:** `inmmplT2BZ` (native GHL form — not used directly)
-- **Webhook URL:** `https://services.leadconnectorhq.com/hooks/LRqVZmxns8f3xcJLHzBK/webhook-trigger/e0f3bbd1-0889-4398-beba-50c2f4ca5a9d`
+- **Webhook URL:** `https://services.leadconnectorhq.com/hooks/LRqVZmxns8f3xcJLHzBK/webhook-trigger/34c004b7-3a84-43b2-a783-4e24f0675388`
 
 ## How It Works
 - The visible form is custom HTML/CSS — it looks great and is fully styled
