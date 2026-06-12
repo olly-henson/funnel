@@ -1,0 +1,321 @@
+<!-- APPLICATION PAGE | Olly Henson Coaching — 1-2-1 Coaching Application -->
+<!-- GHL: One Custom HTML block. Section + column padding/margin = 0. Full Width. -->
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+  html, body { margin: 0 !important; padding: 0 !important; overflow-x: hidden !important; }
+  .ohc-page {
+    width: 100vw !important;
+    position: relative !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    font-family: 'Inter', sans-serif;
+    background: #080010;
+    color: #f8f4ff;
+  }
+
+  /* ── STARS ── */
+  .ohc-stars {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      radial-gradient(1px 1px at 5%  10%, rgba(255,255,255,0.95) 0%, transparent 100%),
+      radial-gradient(1px 1px at 22% 52%, rgba(255,255,255,0.8)  0%, transparent 100%),
+      radial-gradient(2px 2px at 48% 8%,  rgba(255,255,255,0.9)  0%, transparent 100%),
+      radial-gradient(1px 1px at 68% 35%, rgba(255,255,255,0.85) 0%, transparent 100%),
+      radial-gradient(2px 2px at 85% 62%, rgba(255,255,255,0.9)  0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 75%, rgba(255,255,255,0.7)  0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 80%, rgba(255,255,255,0.8)  0%, transparent 100%),
+      radial-gradient(2px 2px at 38% 28%, rgba(216,180,254,0.8)  0%, transparent 100%),
+      radial-gradient(1px 1px at 92% 18%, rgba(255,255,255,0.9)  0%, transparent 100%),
+      radial-gradient(1px 1px at 3%  88%, rgba(255,255,255,0.7)  0%, transparent 100%),
+      radial-gradient(1px 1px at 77% 92%, rgba(255,255,255,0.6)  0%, transparent 100%),
+      radial-gradient(1px 1px at 33% 67%, rgba(255,255,255,0.75) 0%, transparent 100%),
+      radial-gradient(2px 2px at 55% 44%, rgba(216,180,254,0.7)  0%, transparent 100%),
+      radial-gradient(1px 1px at 89% 45%, rgba(255,255,255,0.8)  0%, transparent 100%),
+      radial-gradient(2px 2px at 70% 15%, rgba(255,255,255,0.85) 0%, transparent 100%);
+    animation: twinkle 7s ease-in-out infinite alternate;
+  }
+  @keyframes twinkle { 0% { opacity: 0.5; } 100% { opacity: 1; } }
+
+  .ohc-nebula {
+    position: absolute; top: -20%; left: 50%; transform: translateX(-50%);
+    width: 1000px; height: 600px; pointer-events: none;
+    background: radial-gradient(ellipse, rgba(107,33,168,0.2) 0%, rgba(88,28,135,0.08) 40%, transparent 70%);
+    animation: nebula-pulse 6s ease-in-out infinite;
+  }
+  @keyframes nebula-pulse {
+    0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.7; }
+    50%       { transform: translateX(-50%) scale(1.08); opacity: 1; }
+  }
+
+  /* ── HEADER ── */
+  .ohc-header {
+    position: relative; overflow: hidden;
+    background: #050008;
+    padding: 64px 40px 56px;
+    text-align: center;
+  }
+  .ohc-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+    color: #d946ef; margin-bottom: 16px; position: relative; z-index: 2;
+  }
+  .ohc-h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 900; line-height: 1.1;
+    color: #f8f4ff; margin: 0 auto 16px; max-width: 700px;
+    position: relative; z-index: 2;
+  }
+  .ohc-h1 em {
+    font-style: italic;
+    background: linear-gradient(135deg, #d946ef, #a855f7);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .ohc-subhead {
+    font-size: clamp(15px, 1.8vw, 18px); color: #c4b5fd; line-height: 1.6;
+    max-width: 520px; margin: 0 auto; position: relative; z-index: 2;
+  }
+
+  /* ── FORM ── */
+  .ohc-form-wrap {
+    background: #080010;
+    padding: 48px 40px 80px;
+    display: flex; justify-content: center;
+  }
+  .ohc-form-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(168,85,247,0.2);
+    border-radius: 24px;
+    padding: 48px;
+    width: 100%; max-width: 680px;
+    box-shadow: 0 0 60px rgba(107,33,168,0.15);
+  }
+
+  .ohc-field { margin-bottom: 28px; }
+  .ohc-label {
+    display: block;
+    font-size: 13px; font-weight: 600; color: #c4b5fd;
+    margin-bottom: 8px; letter-spacing: 0.3px;
+  }
+  .ohc-label span { color: #d946ef; margin-left: 2px; }
+
+  .ohc-input,
+  .ohc-textarea {
+    width: 100%; box-sizing: border-box;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(168,85,247,0.25);
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px; color: #f8f4ff;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+  .ohc-input::placeholder,
+  .ohc-textarea::placeholder { color: rgba(196,181,253,0.35); }
+  .ohc-input:focus,
+  .ohc-textarea:focus {
+    border-color: rgba(217,70,239,0.6);
+    box-shadow: 0 0 0 3px rgba(217,70,239,0.12);
+    background: rgba(255,255,255,0.07);
+  }
+  .ohc-textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+
+  .ohc-divider {
+    border: none; border-top: 1px solid rgba(168,85,247,0.12);
+    margin: 36px 0;
+  }
+
+  /* ── SUBMIT BUTTON ── */
+  .ohc-btn {
+    width: 100%; padding: 18px;
+    background: linear-gradient(135deg, #d946ef, #a855f7);
+    border: none; border-radius: 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px; font-weight: 700; color: white;
+    cursor: pointer; letter-spacing: 0.5px;
+    position: relative; overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px rgba(217,70,239,0.4);
+    margin-top: 8px;
+  }
+  .ohc-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(217,70,239,0.55);
+  }
+  .ohc-btn:active { transform: translateY(0); }
+  .ohc-btn::after {
+    content: ''; position: absolute;
+    top: 0; left: -100%; width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  .ohc-btn:hover::after { left: 150%; }
+  .ohc-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  /* ── SUCCESS / ERROR ── */
+  .ohc-success {
+    display: none; text-align: center; padding: 32px 0 8px;
+  }
+  .ohc-success-icon {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: rgba(217,70,239,0.15); border: 2px solid rgba(217,70,239,0.4);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+  }
+  .ohc-success-icon svg { width: 28px; height: 28px; stroke: #d946ef; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .ohc-success h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; color: #f8f4ff; margin: 0 0 10px;
+  }
+  .ohc-success p { font-size: 15px; color: #c4b5fd; margin: 0; line-height: 1.6; }
+
+  .ohc-error-msg {
+    display: none; background: rgba(239,68,68,0.1);
+    border: 1px solid rgba(239,68,68,0.3); border-radius: 10px;
+    padding: 12px 16px; font-size: 13px; color: #fca5a5;
+    margin-top: 16px; text-align: center;
+  }
+
+  /* ── FOOTER ── */
+  .ohc-footer {
+    background: #040008; border-top: 1px solid rgba(168,85,247,0.12);
+    padding: 28px 40px; text-align: center;
+  }
+  .ohc-footer-links { display: flex; justify-content: center; gap: 28px; margin-bottom: 10px; flex-wrap: wrap; }
+  .ohc-footer-links a {
+    font-size: 12px; color: rgba(196,181,253,0.45); text-decoration: none; transition: color 0.2s;
+  }
+  .ohc-footer-links a:hover { color: #a855f7; }
+  .ohc-footer-copy { font-size: 11px; color: rgba(196,181,253,0.25); }
+
+  @media (max-width: 600px) {
+    .ohc-header { padding: 48px 20px 40px; }
+    .ohc-form-wrap { padding: 32px 16px 60px; }
+    .ohc-form-card { padding: 32px 24px; }
+    .ohc-footer { padding: 24px 20px; }
+  }
+</style>
+
+<div class="ohc-page">
+
+  <!-- HEADER -->
+  <div class="ohc-header">
+    <div class="ohc-stars"></div>
+    <div class="ohc-nebula"></div>
+    <p class="ohc-eyebrow">1-2-1 Coaching</p>
+    <h1 class="ohc-h1">Apply to Work with <em>Olly.</em></h1>
+    <p class="ohc-subhead">Tell us a little about where you are and what you're looking to create. We'll be in touch shortly.</p>
+  </div>
+
+  <!-- FORM -->
+  <div class="ohc-form-wrap">
+    <div class="ohc-form-card">
+
+      <form id="ohcAppForm">
+
+        <div class="ohc-field">
+          <label class="ohc-label" for="full_name">Full Name <span>*</span></label>
+          <input class="ohc-input" type="text" id="full_name" name="full_name" placeholder="Your full name" required>
+        </div>
+
+        <div class="ohc-field">
+          <label class="ohc-label" for="email">Best Email Address <span>*</span></label>
+          <input class="ohc-input" type="email" id="email" name="email" placeholder="you@example.com" required>
+        </div>
+
+        <div class="ohc-field">
+          <label class="ohc-label" for="whatsapp">WhatsApp Number <span>*</span></label>
+          <input class="ohc-input" type="tel" id="whatsapp" name="whatsapp" placeholder="+44 7700 000000" required>
+        </div>
+
+        <hr class="ohc-divider">
+
+        <div class="ohc-field">
+          <label class="ohc-label" for="situation">Tell me about your current situation. What are you looking to change? <span>*</span></label>
+          <textarea class="ohc-textarea" id="situation" name="situation" placeholder="Share as much detail as you like..." required></textarea>
+        </div>
+
+        <div class="ohc-field">
+          <label class="ohc-label" for="outcome">What would be a great outcome for you? Please be specific. <span>*</span></label>
+          <textarea class="ohc-textarea" id="outcome" name="outcome" placeholder="Describe what success looks like for you..." required></textarea>
+        </div>
+
+        <div class="ohc-field">
+          <label class="ohc-label" for="become">What would you like to get back to doing? Who would you like to become? <span>*</span></label>
+          <textarea class="ohc-textarea" id="become" name="become" placeholder="Paint the picture..." required></textarea>
+        </div>
+
+        <div class="ohc-field">
+          <label class="ohc-label" for="tried">What have you tried up to this point to heal yourself or transform your life? <span>*</span></label>
+          <textarea class="ohc-textarea" id="tried" name="tried" placeholder="Therapies, programmes, coaching, books..." required></textarea>
+        </div>
+
+        <div class="ohc-field">
+          <label class="ohc-label" for="coaching_before">Have you invested in coaching before? If so, how did it go? <span>*</span></label>
+          <textarea class="ohc-textarea" id="coaching_before" name="coaching_before" placeholder="Tell us about your experience..." required></textarea>
+        </div>
+
+        <button type="submit" class="ohc-btn" id="ohcSubmitBtn">Submit My Application →</button>
+        <div class="ohc-error-msg" id="ohcError">Something went wrong. Please try again or email olly@ollyhenson.com</div>
+
+      </form>
+
+      <div class="ohc-success" id="ohcSuccess">
+        <div class="ohc-success-icon">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3>Application Received.</h3>
+        <p>Thank you for sharing. Olly will review your application and be in touch within a few days.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="ohc-footer">
+    <nav class="ohc-footer-links">
+      <a href="PLACEHOLDER_PRIVACY_POLICY_URL" target="_blank" rel="noopener">Privacy Policy</a>
+      <a href="PLACEHOLDER_TERMS_URL" target="_blank" rel="noopener">Terms &amp; Conditions</a>
+    </nav>
+    <p class="ohc-footer-copy">&copy; 2026 Olly Henson Coaching. All rights reserved.</p>
+  </footer>
+
+</div>
+
+<script>
+  document.getElementById('ohcAppForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('ohcSubmitBtn');
+    const errorEl = document.getElementById('ohcError');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    errorEl.style.display = 'none';
+
+    const data = {
+      full_name:       document.getElementById('full_name').value.trim(),
+      email:           document.getElementById('email').value.trim(),
+      whatsapp:        document.getElementById('whatsapp').value.trim(),
+      situation:       document.getElementById('situation').value.trim(),
+      outcome:         document.getElementById('outcome').value.trim(),
+      become:          document.getElementById('become').value.trim(),
+      tried:           document.getElementById('tried').value.trim(),
+      coaching_before: document.getElementById('coaching_before').value.trim()
+    };
+
+    try {
+      await fetch('https://services.leadconnectorhq.com/hooks/LRqVZmxns8f3xcJLHzBK/webhook-trigger/20d915b2-cc20-42e1-8451-c32f38670efd', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      document.getElementById('ohcAppForm').style.display = 'none';
+      document.getElementById('ohcSuccess').style.display = 'block';
+    } catch(err) {
+      btn.disabled = false;
+      btn.textContent = 'Submit My Application →';
+      errorEl.style.display = 'block';
+    }
+  });
+</script>
