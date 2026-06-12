@@ -19,136 +19,151 @@
   .ohc-stars {
     position: absolute; inset: 0; pointer-events: none;
     background-image:
-      radial-gradient(1px 1px at 5%  10%, rgba(255,255,255,0.95) 0%, transparent 100%),
-      radial-gradient(1px 1px at 22% 52%, rgba(255,255,255,0.8)  0%, transparent 100%),
-      radial-gradient(2px 2px at 48% 8%,  rgba(255,255,255,0.9)  0%, transparent 100%),
-      radial-gradient(1px 1px at 68% 35%, rgba(255,255,255,0.85) 0%, transparent 100%),
-      radial-gradient(2px 2px at 85% 62%, rgba(255,255,255,0.9)  0%, transparent 100%),
-      radial-gradient(1px 1px at 15% 75%, rgba(255,255,255,0.7)  0%, transparent 100%),
-      radial-gradient(1px 1px at 60% 80%, rgba(255,255,255,0.8)  0%, transparent 100%),
-      radial-gradient(2px 2px at 38% 28%, rgba(216,180,254,0.8)  0%, transparent 100%),
-      radial-gradient(1px 1px at 92% 18%, rgba(255,255,255,0.9)  0%, transparent 100%),
-      radial-gradient(1px 1px at 3%  88%, rgba(255,255,255,0.7)  0%, transparent 100%),
-      radial-gradient(1px 1px at 77% 92%, rgba(255,255,255,0.6)  0%, transparent 100%),
-      radial-gradient(1px 1px at 33% 67%, rgba(255,255,255,0.75) 0%, transparent 100%),
-      radial-gradient(2px 2px at 55% 44%, rgba(216,180,254,0.7)  0%, transparent 100%),
-      radial-gradient(1px 1px at 89% 45%, rgba(255,255,255,0.8)  0%, transparent 100%),
-      radial-gradient(2px 2px at 70% 15%, rgba(255,255,255,0.85) 0%, transparent 100%);
+      radial-gradient(2px 2px at 5%  10%, rgba(255,255,255,1)    0%, transparent 100%),
+      radial-gradient(1px 1px at 22% 52%, rgba(255,255,255,0.9)  0%, transparent 100%),
+      radial-gradient(3px 3px at 48% 8%,  rgba(255,255,255,1)    0%, transparent 100%),
+      radial-gradient(2px 2px at 68% 35%, rgba(255,255,255,0.95) 0%, transparent 100%),
+      radial-gradient(3px 3px at 85% 62%, rgba(255,255,255,1)    0%, transparent 100%),
+      radial-gradient(2px 2px at 15% 75%, rgba(255,255,255,0.85) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 80%, rgba(255,255,255,0.9)  0%, transparent 100%),
+      radial-gradient(3px 3px at 38% 28%, rgba(216,180,254,1)    0%, transparent 100%),
+      radial-gradient(2px 2px at 92% 18%, rgba(255,255,255,1)    0%, transparent 100%),
+      radial-gradient(1px 1px at 3%  88%, rgba(255,255,255,0.85) 0%, transparent 100%),
+      radial-gradient(2px 2px at 77% 92%, rgba(255,255,255,0.8)  0%, transparent 100%),
+      radial-gradient(1px 1px at 33% 67%, rgba(255,255,255,0.9)  0%, transparent 100%),
+      radial-gradient(3px 3px at 55% 44%, rgba(216,180,254,0.9)  0%, transparent 100%),
+      radial-gradient(2px 2px at 89% 45%, rgba(255,255,255,0.95) 0%, transparent 100%),
+      radial-gradient(3px 3px at 70% 15%, rgba(255,255,255,1)    0%, transparent 100%),
+      radial-gradient(1px 1px at 12% 38%, rgba(255,255,255,0.8)  0%, transparent 100%),
+      radial-gradient(2px 2px at 45% 70%, rgba(216,180,254,0.85) 0%, transparent 100%),
+      radial-gradient(1px 1px at 95% 80%, rgba(255,255,255,0.75) 0%, transparent 100%),
+      radial-gradient(2px 2px at 28% 15%, rgba(255,255,255,0.9)  0%, transparent 100%),
+      radial-gradient(3px 3px at 75% 55%, rgba(217,70,239,0.7)   0%, transparent 100%);
     animation: twinkle 7s ease-in-out infinite alternate;
   }
-  @keyframes twinkle { 0% { opacity: 0.5; } 100% { opacity: 1; } }
+  @keyframes twinkle { 0% { opacity: 0.4; } 100% { opacity: 1; } }
 
   .ohc-nebula {
-    position: absolute; top: -20%; left: 50%; transform: translateX(-50%);
-    width: 1000px; height: 600px; pointer-events: none;
-    background: radial-gradient(ellipse, rgba(107,33,168,0.2) 0%, rgba(88,28,135,0.08) 40%, transparent 70%);
+    position: absolute; top: -10%; left: 50%; transform: translateX(-50%);
+    width: 1400px; height: 800px; pointer-events: none;
+    background:
+      radial-gradient(ellipse at 40% 50%, rgba(217,70,239,0.18) 0%, transparent 50%),
+      radial-gradient(ellipse at 60% 50%, rgba(107,33,168,0.25) 0%, rgba(88,28,135,0.1) 40%, transparent 65%);
     animation: nebula-pulse 6s ease-in-out infinite;
   }
   @keyframes nebula-pulse {
-    0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.7; }
-    50%       { transform: translateX(-50%) scale(1.08); opacity: 1; }
+    0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.8; }
+    50%       { transform: translateX(-50%) scale(1.1); opacity: 1; }
   }
 
   /* ── HEADER ── */
   .ohc-header {
     position: relative; overflow: hidden;
-    background: #050008;
-    padding: 64px 40px 56px;
+    background: linear-gradient(180deg, #03000a 0%, #080010 100%);
+    padding: 72px 40px 56px;
     text-align: center;
   }
   .ohc-eyebrow {
-    font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
-    color: #d946ef; margin-bottom: 16px; position: relative; z-index: 2;
+    font-size: 12px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+    color: #d946ef; margin-bottom: 20px; position: relative; z-index: 2;
+    text-shadow: 0 0 20px rgba(217,70,239,0.6);
   }
   .ohc-h1 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(32px, 5vw, 56px);
-    font-weight: 900; line-height: 1.1;
-    color: #f8f4ff; margin: 0 auto 16px; max-width: 700px;
+    font-size: clamp(40px, 6vw, 68px);
+    font-weight: 900; line-height: 1.08;
+    color: #f8f4ff; margin: 0 auto 20px; max-width: 760px;
     position: relative; z-index: 2;
+    text-shadow: 0 0 40px rgba(168,85,247,0.3);
   }
   .ohc-h1 em {
     font-style: italic;
-    background: linear-gradient(135deg, #d946ef, #a855f7);
+    background: linear-gradient(135deg, #f0abfc, #d946ef, #a855f7);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    filter: drop-shadow(0 0 12px rgba(217,70,239,0.5));
   }
   .ohc-subhead {
-    font-size: clamp(15px, 1.8vw, 18px); color: #c4b5fd; line-height: 1.6;
-    max-width: 520px; margin: 0 auto; position: relative; z-index: 2;
+    font-size: clamp(17px, 2vw, 21px); color: #e2d9ff; line-height: 1.65;
+    max-width: 560px; margin: 0 auto; position: relative; z-index: 2;
+    font-weight: 400;
   }
 
   /* ── FORM ── */
   .ohc-form-wrap {
-    background: #080010;
-    padding: 48px 40px 80px;
+    background: linear-gradient(180deg, #080010 0%, #050008 100%);
+    padding: 48px 24px 96px;
     display: flex; justify-content: center;
   }
   .ohc-form-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(168,85,247,0.2);
-    border-radius: 24px;
-    padding: 48px;
-    width: 100%; max-width: 680px;
-    box-shadow: 0 0 60px rgba(107,33,168,0.15);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(168,85,247,0.35);
+    border-radius: 28px;
+    padding: 56px 60px;
+    width: 100%; max-width: 860px;
+    box-shadow:
+      0 0 0 1px rgba(217,70,239,0.08),
+      0 8px 32px rgba(0,0,0,0.4),
+      0 0 80px rgba(107,33,168,0.25),
+      inset 0 1px 0 rgba(255,255,255,0.06);
   }
 
-  .ohc-field { margin-bottom: 28px; }
+  .ohc-field { margin-bottom: 32px; }
   .ohc-label {
     display: block;
-    font-size: 13px; font-weight: 600; color: #c4b5fd;
-    margin-bottom: 8px; letter-spacing: 0.3px;
+    font-size: 15px; font-weight: 600; color: #e2d9ff;
+    margin-bottom: 10px; letter-spacing: 0.2px; line-height: 1.4;
   }
   .ohc-label span { color: #d946ef; margin-left: 2px; }
 
   .ohc-input,
   .ohc-textarea {
     width: 100%; box-sizing: border-box;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(168,85,247,0.25);
-    border-radius: 12px;
-    padding: 14px 18px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(168,85,247,0.3);
+    border-radius: 14px;
+    padding: 16px 20px;
     font-family: 'Inter', sans-serif;
-    font-size: 15px; color: #f8f4ff;
+    font-size: 17px; color: #f8f4ff;
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
   }
   .ohc-input::placeholder,
-  .ohc-textarea::placeholder { color: rgba(196,181,253,0.35); }
+  .ohc-textarea::placeholder { color: rgba(196,181,253,0.4); }
   .ohc-input:focus,
   .ohc-textarea:focus {
-    border-color: rgba(217,70,239,0.6);
-    box-shadow: 0 0 0 3px rgba(217,70,239,0.12);
-    background: rgba(255,255,255,0.07);
+    border-color: rgba(217,70,239,0.7);
+    box-shadow: 0 0 0 4px rgba(217,70,239,0.14), 0 0 20px rgba(217,70,239,0.08);
+    background: rgba(255,255,255,0.09);
   }
-  .ohc-textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+  .ohc-textarea { resize: vertical; min-height: 130px; line-height: 1.65; }
 
   .ohc-divider {
-    border: none; border-top: 1px solid rgba(168,85,247,0.12);
-    margin: 36px 0;
+    border: none; border-top: 1px solid rgba(168,85,247,0.18);
+    margin: 40px 0;
   }
 
   /* ── SUBMIT BUTTON ── */
   .ohc-btn {
-    width: 100%; padding: 18px;
-    background: linear-gradient(135deg, #d946ef, #a855f7);
-    border: none; border-radius: 14px;
+    width: 100%; padding: 22px;
+    background: linear-gradient(135deg, #e879f9, #d946ef, #a855f7);
+    border: none; border-radius: 16px;
     font-family: 'Inter', sans-serif;
-    font-size: 16px; font-weight: 700; color: white;
+    font-size: 18px; font-weight: 700; color: white;
     cursor: pointer; letter-spacing: 0.5px;
     position: relative; overflow: hidden;
     transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 24px rgba(217,70,239,0.4);
-    margin-top: 8px;
+    box-shadow: 0 6px 32px rgba(217,70,239,0.55), 0 0 0 1px rgba(255,255,255,0.1) inset;
+    margin-top: 12px;
   }
   .ohc-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(217,70,239,0.55);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 48px rgba(217,70,239,0.7), 0 0 0 1px rgba(255,255,255,0.15) inset;
   }
   .ohc-btn:active { transform: translateY(0); }
   .ohc-btn::after {
     content: ''; position: absolute;
     top: 0; left: -100%; width: 60%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
     transition: left 0.5s ease;
   }
   .ohc-btn:hover::after { left: 150%; }
@@ -159,40 +174,41 @@
     display: none; text-align: center; padding: 32px 0 8px;
   }
   .ohc-success-icon {
-    width: 64px; height: 64px; border-radius: 50%;
-    background: rgba(217,70,239,0.15); border: 2px solid rgba(217,70,239,0.4);
+    width: 72px; height: 72px; border-radius: 50%;
+    background: rgba(217,70,239,0.15); border: 2px solid rgba(217,70,239,0.5);
     display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 20px;
+    margin: 0 auto 24px;
+    box-shadow: 0 0 32px rgba(217,70,239,0.3);
   }
-  .ohc-success-icon svg { width: 28px; height: 28px; stroke: #d946ef; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .ohc-success-icon svg { width: 32px; height: 32px; stroke: #d946ef; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
   .ohc-success h3 {
     font-family: 'Playfair Display', serif;
-    font-size: 26px; color: #f8f4ff; margin: 0 0 10px;
+    font-size: 30px; color: #f8f4ff; margin: 0 0 12px;
   }
-  .ohc-success p { font-size: 15px; color: #c4b5fd; margin: 0; line-height: 1.6; }
+  .ohc-success p { font-size: 17px; color: #c4b5fd; margin: 0; line-height: 1.65; }
 
   .ohc-error-msg {
     display: none; background: rgba(239,68,68,0.1);
-    border: 1px solid rgba(239,68,68,0.3); border-radius: 10px;
-    padding: 12px 16px; font-size: 13px; color: #fca5a5;
+    border: 1px solid rgba(239,68,68,0.3); border-radius: 12px;
+    padding: 14px 18px; font-size: 15px; color: #fca5a5;
     margin-top: 16px; text-align: center;
   }
 
   /* ── FOOTER ── */
   .ohc-footer {
-    background: #040008; border-top: 1px solid rgba(168,85,247,0.12);
+    background: #03000a; border-top: 1px solid rgba(168,85,247,0.15);
     padding: 28px 40px; text-align: center;
   }
   .ohc-footer-links { display: flex; justify-content: center; gap: 28px; margin-bottom: 10px; flex-wrap: wrap; }
   .ohc-footer-links a {
-    font-size: 12px; color: rgba(196,181,253,0.45); text-decoration: none; transition: color 0.2s;
+    font-size: 13px; color: rgba(196,181,253,0.45); text-decoration: none; transition: color 0.2s;
   }
   .ohc-footer-links a:hover { color: #a855f7; }
-  .ohc-footer-copy { font-size: 11px; color: rgba(196,181,253,0.25); }
+  .ohc-footer-copy { font-size: 12px; color: rgba(196,181,253,0.25); }
 
   @media (max-width: 600px) {
-    .ohc-header { padding: 48px 20px 40px; }
-    .ohc-form-wrap { padding: 32px 16px 60px; }
+    .ohc-header { padding: 52px 20px 40px; }
+    .ohc-form-wrap { padding: 32px 16px 72px; }
     .ohc-form-card { padding: 32px 24px; }
     .ohc-footer { padding: 24px 20px; }
   }
