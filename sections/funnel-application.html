@@ -83,9 +83,17 @@
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     filter: drop-shadow(0 0 16px rgba(124,58,237,0.6));
   }
+  .ohc-hero-img {
+    display: block; margin: 24px auto 28px;
+    width: 220px; height: 220px; object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid rgba(124,58,237,0.5);
+    box-shadow: 0 0 40px rgba(109,40,217,0.4);
+    position: relative; z-index: 2;
+  }
   .ohc-subhead {
-    font-size: clamp(18px, 2.2vw, 22px); color: #e9e4ff; line-height: 1.65;
-    max-width: 580px; margin: 0 auto; position: relative; z-index: 2;
+    font-size: clamp(15px, 1.6vw, 18px); color: #c4b5fd; line-height: 1.7;
+    max-width: 600px; margin: 0 auto; position: relative; z-index: 2;
     font-weight: 400;
   }
 
@@ -96,22 +104,22 @@
     display: flex; justify-content: center;
   }
   .ohc-form-card {
-    background: rgba(15,5,30,0.7);
-    border: 1px solid rgba(124,58,237,0.4);
+    background: rgba(35,12,70,0.75);
+    border: 1px solid rgba(124,58,237,0.45);
     border-radius: 28px;
     padding: 56px 60px;
     width: 100%; max-width: 860px;
     box-shadow:
-      0 0 0 1px rgba(139,92,246,0.1),
-      0 8px 48px rgba(0,0,0,0.6),
+      0 0 0 1px rgba(139,92,246,0.12),
+      0 8px 48px rgba(0,0,0,0.5),
       0 0 100px rgba(76,29,149,0.3),
-      inset 0 1px 0 rgba(255,255,255,0.07);
+      inset 0 1px 0 rgba(255,255,255,0.09);
   }
 
   .ohc-field { margin-bottom: 32px; }
   .ohc-label {
     display: block;
-    font-size: 16px; font-weight: 600; color: #ede9fe;
+    font-size: 18px; font-weight: 600; color: #ede9fe;
     margin-bottom: 10px; letter-spacing: 0.2px; line-height: 1.4;
   }
   .ohc-label span { color: #a78bfa; margin-left: 2px; }
@@ -119,12 +127,12 @@
   .ohc-input,
   .ohc-textarea {
     width: 100%; box-sizing: border-box;
-    background: rgba(10,3,24,0.6);
-    border: 1px solid rgba(109,40,217,0.4);
+    background: rgba(20,8,45,0.7);
+    border: 1px solid rgba(109,40,217,0.45);
     border-radius: 14px;
     padding: 16px 20px;
     font-family: 'Inter', sans-serif;
-    font-size: 18px; color: #ffffff;
+    font-size: 19px; color: #ffffff;
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
   }
@@ -223,6 +231,7 @@
     <div class="ohc-nebula"></div>
     <p class="ohc-eyebrow">1-2-1 Coaching Program</p>
     <h1 class="ohc-h1">The Heart Creator <em>Program.</em></h1>
+    <img class="ohc-hero-img" src="https://assets.cdn.filesafe.space/LRqVZmxns8f3xcJLHzBK/media/6a2afe5b9bdda92b22d3bdbf.png" alt="Heart activation">
     <p class="ohc-subhead">Work 1-2-1 with me to activate the power of your heart and become your reality creator. Please fill in the form below if you're interested in this program and I'll be in touch shortly with the next steps.</p>
   </div>
 
