@@ -150,18 +150,32 @@ funnel/
   3. Add to nurture sequence (TBC)
 - Autoresponder email template: built in GHL Code Editor, delivers meditation URL
 
+## PDF Practice Guide
+- **File:** `sections/practice-guide.html`
+- **Generator:** `generate-pdf.mjs` — run with `node --input-type=module --eval "import './generate-pdf.mjs'"` from funnel root
+- **Hosted PDF URL:** `https://assets.cdn.filesafe.space/LRqVZmxns8f3xcJLHzBK/media/6a2c6d2b8a3c98ce5652963a.pdf`
+- Puppeteer installed in funnel folder for PDF/image generation
+
+## Logo
+- **Folder:** `logo/`
+- **File:** `logo/heart-logo.html` — SVG heart with chaotic → coherent waveform transformation
+- **Generator:** `logo/generate-logo.mjs` — outputs `logo/heart-logo.png`
+- Work in progress — cosmic palette, brand colours
+
+## Legal Pages
+- **Privacy Policy:** `sections/privacy-policy.html` → `https://ollyhenson.com/privacy-policy`
+- **Terms & Conditions:** `sections/terms.html` → `https://ollyhenson.com/terms`
+- Both cover UK GDPR, Data Protection Act 2018, ICO, coaching disclaimer, Skool community, HCP programme
+- All funnel pages and homepage footer updated with live URLs
+
 ## Still To Complete
 - [ ] Add redirect URL to `opt-in.html` after successful form submission (uncomment `window.location.href` line in JS)
-- [ ] Add Privacy Policy URL to footer in both pages
-- [ ] Add Terms & Conditions URL to footer in both pages
 - [ ] Replace video placeholder in meditation-delivery.html with real Vimeo/YouTube iframe
-- [ ] Replace PLACEHOLDER_PDF_URL in meditation-delivery.html with hosted PDF URL
-- [ ] Replace PLACEHOLDER_APPLICATION_URL in meditation-delivery.html with application page URL
-- [ ] Build out GHL meditation workflow (tag, send email, nurture sequence)
+- [ ] Build out GHL meditation workflow nurture sequence emails
+- [ ] Add autoresponder to Applications workflow for applicants
 - [ ] Split test: Variant B = breathing image animation
 - [ ] Canva "Heart" brand kit — manually add colours and fonts (see brand/brand-guidelines.md)
-- [ ] Add autoresponder to Applications workflow for applicants
-- [ ] Add Privacy Policy + Terms URLs to application form footer
+- [ ] Finalise heart logo design
 
 ## Canva Brand Kit
 - **Kit name:** Heart
