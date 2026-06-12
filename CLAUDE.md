@@ -134,11 +134,30 @@ funnel/
 - First/Last name side by side on one row
 - No placeholder text in textareas — questions speak for themselves
 
+## Meditation Delivery Page — meditation-delivery.html
+- **GHL page path:** `/meditation-access`
+- **URL:** `https://ollyhenson.com/meditation-access`
+- Styled to match opt-in page (cosmic dark, stars, nebula glow)
+- Video placeholder — replace with Vimeo/YouTube iframe when ready
+- PDF practice guide button — replace `PLACEHOLDER_PDF_URL` with hosted PDF URL
+- Heart Creator Program application button — replace `PLACEHOLDER_APPLICATION_URL` with application page URL
+
+## Meditation Workflow (GHL)
+- Trigger: webhook (opt-in form submission)
+- Actions needed:
+  1. Tag contact: "Meditation Download"
+  2. Send autoresponder email — delivers link to `https://ollyhenson.com/meditation-access`
+  3. Add to nurture sequence (TBC)
+- Autoresponder email template: built in GHL Code Editor, delivers meditation URL
+
 ## Still To Complete
 - [ ] Add redirect URL to `main.html` after successful form submission (uncomment `window.location.href` line in JS)
 - [ ] Add Privacy Policy URL to footer in both pages
 - [ ] Add Terms & Conditions URL to footer in both pages
-- [ ] Set up workflow actions after webhook trigger in GHL (tag contact, send meditation audio, add to email sequence)
+- [ ] Replace video placeholder in meditation-delivery.html with real Vimeo/YouTube iframe
+- [ ] Replace PLACEHOLDER_PDF_URL in meditation-delivery.html with hosted PDF URL
+- [ ] Replace PLACEHOLDER_APPLICATION_URL in meditation-delivery.html with application page URL
+- [ ] Build out GHL meditation workflow (tag, send email, nurture sequence)
 - [ ] Split test: Variant B = breathing image animation
 - [ ] Canva "Heart" brand kit — manually add colours and fonts (see brand/brand-guidelines.md)
 - [ ] Add autoresponder to Applications workflow for applicants
