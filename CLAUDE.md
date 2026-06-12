@@ -7,7 +7,7 @@ Custom HTML/CSS landing pages for Olly Henson Coaching, built section by section
 ```
 funnel/
   sections/
-    main.html                  ← opt-in page (one block in GHL)
+    opt-in.html                  ← opt-in page (one block in GHL)
     thank-you.html             ← thank you page (one block in GHL)
     funnel-application.html    ← 1-2-1 coaching application form (one block in GHL)
   brand/
@@ -15,7 +15,7 @@ funnel/
   CLAUDE.md
   README.md
   ghl-setup-guide.md
-  custom-css.css     ← legacy (now embedded inside main.html)
+  custom-css.css     ← legacy (now embedded inside opt-in.html)
 ```
 
 ## GHL Setup
@@ -65,7 +65,7 @@ funnel/
 - **Headline style:** Line 1 white, Line 2 italic gradient (magenta→violet)
 
 ## Current Page Copy
-### main.html
+### opt-in.html
 - **Headline:** Activate Your Heart, / Create Your World.
 - **Subheading:** A simple but powerful meditation to take you out of your head and into your creative power.
 - **Form heading:** Where should we send it?
@@ -151,7 +151,7 @@ funnel/
 - Autoresponder email template: built in GHL Code Editor, delivers meditation URL
 
 ## Still To Complete
-- [ ] Add redirect URL to `main.html` after successful form submission (uncomment `window.location.href` line in JS)
+- [ ] Add redirect URL to `opt-in.html` after successful form submission (uncomment `window.location.href` line in JS)
 - [ ] Add Privacy Policy URL to footer in both pages
 - [ ] Add Terms & Conditions URL to footer in both pages
 - [ ] Replace video placeholder in meditation-delivery.html with real Vimeo/YouTube iframe
