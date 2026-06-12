@@ -241,18 +241,18 @@
 
         <div style="display:flex; gap:20px;">
           <div class="ohc-field" style="flex:1;">
-            <label class="ohc-label" for="first_name">First Name <span>*</span></label>
-            <input class="ohc-input" type="text" id="first_name" name="first_name" placeholder="" required>
+            <label class="ohc-label" for="ohc_fname">First Name <span>*</span></label>
+            <input class="ohc-input" type="text" id="ohc_fname" name="ohc_fname" autocomplete="given-name" placeholder="" required>
           </div>
           <div class="ohc-field" style="flex:1;">
-            <label class="ohc-label" for="last_name">Last Name <span>*</span></label>
-            <input class="ohc-input" type="text" id="last_name" name="last_name" placeholder="" required>
+            <label class="ohc-label" for="ohc_lname">Last Name <span>*</span></label>
+            <input class="ohc-input" type="text" id="ohc_lname" name="ohc_lname" autocomplete="family-name" placeholder="" required>
           </div>
         </div>
 
         <div class="ohc-field">
-          <label class="ohc-label" for="email">Best Email Address <span>*</span></label>
-          <input class="ohc-input" type="email" id="email" name="email" placeholder="you@example.com" required>
+          <label class="ohc-label" for="ohc_email">Best Email Address <span>*</span></label>
+          <input class="ohc-input" type="text" id="ohc_email" name="ohc_email" autocomplete="email" placeholder="you@example.com" required>
         </div>
 
         <div class="ohc-field">
@@ -324,9 +324,9 @@
     errorEl.style.display = 'none';
 
     const data = {
-      first_name:      document.getElementById('first_name').value.trim(),
-      last_name:       document.getElementById('last_name').value.trim(),
-      email:           document.getElementById('email').value.trim(),
+      first_name:      document.getElementById('ohc_fname').value.trim(),
+      last_name:       document.getElementById('ohc_lname').value.trim(),
+      email:           document.getElementById('ohc_email').value.trim(),
       whatsapp:        document.getElementById('whatsapp').value.trim(),
       situation:       document.getElementById('situation').value.trim(),
       outcome:         document.getElementById('outcome').value.trim(),
