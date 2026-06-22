@@ -1,5 +1,15 @@
-<!-- THANK YOU PAGE | Olly Henson Coaching — Meditation Funnel -->
-<!-- GHL: Replace entire Custom HTML block contents with this. Section + column padding/margin = 0. -->
+<!-- APPLICATION THANK YOU PAGE | Olly Henson Coaching -->
+<!-- GHL: One Custom HTML block. Section + column padding/margin = 0. Full Width. -->
+<!-- GHL page path: /application-thank-you -->
+
+<!-- Google Analytics GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1VR8T0WKYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-1VR8T0WKYZ');
+</script>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
 
@@ -68,7 +78,7 @@
     width: 64px; height: 64px; border-radius: 50%;
     background: linear-gradient(135deg, #d946ef, #6b21a8);
     display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 28px;
+    margin: 0 auto 36px;
     box-shadow: 0 0 30px rgba(217,70,239,0.5);
     animation: pop-in 0.5s ease-out;
   }
@@ -81,10 +91,10 @@
 
   .ohc-h1 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(38px, 6vw, 76px);
+    font-size: clamp(38px, 6vw, 72px);
     font-weight: 900; line-height: 1.1;
-    color: #f8f4ff; margin: 0 auto 16px;
-    max-width: 900px; width: 100%;
+    color: #f8f4ff; margin: 0 auto 24px;
+    max-width: 800px; width: 100%;
     position: relative; z-index: 2;
   }
   .ohc-h1 em {
@@ -93,49 +103,14 @@
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
 
-  .ohc-sub {
-    font-size: clamp(16px, 2vw, 20px); color: #c4b5fd; line-height: 1.6;
-    max-width: 420px; margin: 0 auto 36px; position: relative; z-index: 2;
-  }
-
-  .ohc-focal-image {
-    position: relative; z-index: 2;
-    margin-bottom: 40px;
-  }
-  .ohc-focal-image img {
-    width: 100%; max-width: 520px;
-    border-radius: 20px;
-    box-shadow: 0 0 60px rgba(217,70,239,0.3), 0 0 120px rgba(107,33,168,0.2);
-    display: block; margin: 0 auto;
-  }
-
-  .ohc-cta-wrap {
+  .ohc-message {
+    font-size: clamp(17px, 2vw, 22px);
+    color: #c4b5fd;
+    line-height: 1.7;
+    max-width: 520px;
+    margin: 0 auto;
     position: relative; z-index: 2;
   }
-
-  .ohc-cta-label {
-    font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
-    color: #c4b5fd; margin-bottom: 16px;
-  }
-
-  .ohc-skool-btn {
-    display: inline-block;
-    padding: 20px 48px;
-    background: linear-gradient(135deg, #d946ef 0%, #6b21a8 100%);
-    color: white; font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 700;
-    letter-spacing: 0.5px; border: none; border-radius: 50px; cursor: pointer;
-    text-decoration: none;
-    position: relative; overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 30px rgba(217,70,239,0.4);
-  }
-  .ohc-skool-btn::after {
-    content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-    transform: skewX(-20deg); transition: left 0.5s ease;
-  }
-  .ohc-skool-btn:hover::after { left: 150%; }
-  .ohc-skool-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(217,70,239,0.6); }
 
   .ohc-footer {
     background: #040008; border-top: 1px solid rgba(168,85,247,0.12);
@@ -148,10 +123,12 @@
   .ohc-footer-links a:hover { color: #a855f7; }
   .ohc-footer-copy { font-size: 11px; color: rgba(196,181,253,0.25); }
 
+  .ohc-desktop-break { display: block; }
+
   @media (max-width: 600px) {
+    .ohc-desktop-break { display: none; }
     .ohc-fold { padding: 48px 20px 56px; }
     .ohc-h1 { font-size: 36px; }
-    .ohc-skool-btn { padding: 18px 32px; font-size: 16px; }
     .ohc-footer { padding: 24px 20px; }
   }
 </style>
@@ -162,32 +139,18 @@
     <div class="ohc-stars"></div>
     <div class="ohc-nebula"></div>
 
-    <!-- CHECK ICON -->
     <div class="ohc-check">
       <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
     </div>
 
     <h1 class="ohc-h1">
-      Your Meditation<br><em>is On Its Way.</em>
+      I've Got<br><em>Your Application.</em>
     </h1>
 
-    <p class="ohc-sub">Check your inbox. Your Heart Activation Meditation will be there shortly.</p>
+    <p class="ohc-message">Please give me a few days to go over it<br class="ohc-desktop-break"> and I'll be in touch.</p>
 
-    <!-- GUY IMAGE -->
-    <div class="ohc-focal-image">
-      <img src="https://assets.cdn.filesafe.space/LRqVZmxns8f3xcJLHzBK/media/6a2b0038e5084c4b718e68e7.png" alt="Olly Henson"/>
-    </div>
-
-    <!-- SKOOL CTA -->
-    <div class="ohc-cta-wrap">
-      <p class="ohc-cta-label">Ready to start creating?</p>
-      <a href="https://ollyhenson.com/coaching-application?ref=Applied from thank you page" target="_blank" rel="noopener" class="ohc-skool-btn">
-        Heart Creator Program →
-      </a>
-    </div>
   </div>
 
-  <!-- FOOTER -->
   <footer class="ohc-footer">
     <nav class="ohc-footer-links">
       <a href="https://ollyhenson.com/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
@@ -199,22 +162,17 @@
 </div>
 
 <script>
-  function fireLeadEvent() {
+  function fireApplicationEvent() {
     if (typeof gtag === 'function') {
-      gtag('event', 'generate_lead', {
+      gtag('event', 'application_submitted', {
         event_category: 'funnel',
-        event_label: 'meditation_optin'
+        event_label: 'coaching_application'
       });
     }
   }
   if (document.readyState === 'complete') {
-    setTimeout(fireLeadEvent, 1000);
+    setTimeout(fireApplicationEvent, 1000);
   } else {
-    window.addEventListener('load', function() { setTimeout(fireLeadEvent, 1000); });
+    window.addEventListener('load', function() { setTimeout(fireApplicationEvent, 1000); });
   }
-</script>
-
-<script
-  src="https://link.kourse.com/js/external-tracking.js"
-  data-tracking-id="tk_068191bb481e45768fdbfea82d7d1b59">
 </script>

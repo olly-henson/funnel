@@ -280,7 +280,7 @@
     <div class="ohc-nebula"></div>
 
     <h1 class="ohc-h1">
-      Activate Your Heart,<br><em>Create Your World.</em>
+      Activate Your Heart,<br><em>Create Your Reality.</em>
     </h1>
 
     <p class="ohc-sub">A simple but powerful meditation to take you out of your head and into your creative power.</p>
@@ -293,7 +293,7 @@
     <!-- FORM -->
     <div class="ohc-form-wrap">
       <h2 class="ohc-form-h2">Where should we <strong>send it?</strong></h2>
-      <form id="ohc-overlay-form" novalidate>
+      <div id="ohc-overlay-form">
         <div class="ohc-row">
           <input class="ohc-input" type="text" id="ohc-first-name" placeholder="First Name" required autocomplete="given-name"/>
           <input class="ohc-input" type="text" id="ohc-last-name" placeholder="Last Name" autocomplete="family-name"/>
@@ -301,9 +301,9 @@
         <div class="ohc-email-wrap">
           <input class="ohc-input" type="email" id="ohc-email" placeholder="Email Address" required autocomplete="email"/>
         </div>
-        <button type="submit" class="ohc-btn" id="ohc-submit-btn">Send Me the Meditation →</button>
+        <button type="button" class="ohc-btn" id="ohc-submit-btn">Send Me the Meditation →</button>
         <p class="ohc-disclaimer">By entering your details you agree to receive emails from Olly Henson Coaching. We respect your privacy and will never share your information.</p>
-      </form>
+      </div>
     </div>
   </div>
 
@@ -371,7 +371,7 @@
   var form = document.getElementById('ohc-overlay-form');
   var btn  = document.getElementById('ohc-submit-btn');
 
-  form.addEventListener('submit', function(e) {
+  btn.addEventListener('click', function(e) {
     e.preventDefault();
     var firstName = document.getElementById('ohc-first-name').value.trim();
     var lastName  = document.getElementById('ohc-last-name').value.trim();
@@ -383,14 +383,20 @@
     btn.textContent = 'Sending...';
     btn.disabled = true;
 
+    var utmParams = getUtmParams();
+
     fetch('https://services.leadconnectorhq.com/hooks/LRqVZmxns8f3xcJLHzBK/webhook-trigger/34c004b7-3a84-43b2-a783-4e24f0675388', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        first_name: firstName,
-        last_name:  lastName,
-        email:      email,
-        full_name:  firstName + ' ' + lastName
+        first_name:    firstName,
+        last_name:     lastName,
+        email:         email,
+        full_name:     firstName + ' ' + lastName,
+        utm_source:    utmParams.utm_source,
+        utm_medium:    utmParams.utm_medium,
+        utm_campaign:  utmParams.utm_campaign,
+        utm_content:   utmParams.utm_content
       })
     })
     .then(function() {
@@ -415,6 +421,23 @@
   }
 
   function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+
+  function getUtmParams() {
+    var params = new URLSearchParams(window.location.search);
+    var stored = {};
+    try { stored = JSON.parse(sessionStorage.getItem('ohc_utm') || '{}'); } catch(e) {}
+    var utm = {
+      utm_source:   params.get('utm_source')   || stored.utm_source   || '',
+      utm_medium:   params.get('utm_medium')   || stored.utm_medium   || '',
+      utm_campaign: params.get('utm_campaign') || stored.utm_campaign || '',
+      utm_content:  params.get('utm_content')  || stored.utm_content  || ''
+    };
+    try { sessionStorage.setItem('ohc_utm', JSON.stringify(utm)); } catch(e) {}
+    return utm;
+  }
+
+  // Capture UTMs on page load
+  getUtmParams();
 
   window.ohcDiagnose = function() {
     var forms = document.querySelectorAll('form');

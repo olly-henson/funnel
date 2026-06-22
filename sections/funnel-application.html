@@ -237,7 +237,7 @@
   <div class="ohc-form-wrap">
     <div class="ohc-form-card">
 
-      <form id="ohcAppForm">
+      <div id="ohcAppForm">
 
         <div style="display:flex; gap:20px;">
           <div class="ohc-field" style="flex:1;">
@@ -257,7 +257,30 @@
 
         <div class="ohc-field">
           <label class="ohc-label" for="whatsapp">WhatsApp Number <span>*</span></label>
-          <input class="ohc-input" type="tel" id="whatsapp" name="whatsapp" placeholder="+44 7700 000000" required>
+          <div style="display:flex;gap:8px;align-items:center">
+            <select id="whatsapp_code" style="padding:14px 10px;background:#1e0a40;border:1.5px solid #7c3aed;border-radius:10px;color:#f8f4ff;font-size:15px;min-width:110px;outline:none;cursor:pointer">
+              <option value="+1">🇺🇸 +1</option>
+              <option value="+1-CA">🇨🇦 +1</option>
+              <option value="+44" selected>🇬🇧 +44</option>
+              <option value="+61">🇦🇺 +61</option>
+              <option value="+64">🇳🇿 +64</option>
+              <option value="+353">🇮🇪 +353</option>
+              <option value="+27">🇿🇦 +27</option>
+              <option value="+31">🇳🇱 +31</option>
+              <option value="+49">🇩🇪 +49</option>
+              <option value="+33">🇫🇷 +33</option>
+              <option value="+34">🇪🇸 +34</option>
+              <option value="+39">🇮🇹 +39</option>
+              <option value="+46">🇸🇪 +46</option>
+              <option value="+47">🇳🇴 +47</option>
+              <option value="+45">🇩🇰 +45</option>
+              <option value="+41">🇨🇭 +41</option>
+              <option value="+91">🇮🇳 +91</option>
+              <option value="+65">🇸🇬 +65</option>
+              <option value="+971">🇦🇪 +971</option>
+            </select>
+            <input class="ohc-input" type="tel" id="whatsapp" name="whatsapp" placeholder="7911 123456" required style="flex:1;margin:0">
+          </div>
         </div>
 
         <hr class="ohc-divider">
@@ -287,10 +310,10 @@
           <textarea class="ohc-textarea" id="coaching_before" name="coaching_before" placeholder="" required></textarea>
         </div>
 
-        <button type="submit" class="ohc-btn" id="ohcSubmitBtn">Submit My Application →</button>
+        <button type="button" class="ohc-btn" id="ohcSubmitBtn">Submit My Application →</button>
         <div class="ohc-error-msg" id="ohcError">Something went wrong. Please try again or email olly@ollyhenson.com</div>
 
-      </form>
+      </div>
 
       <div class="ohc-success" id="ohcSuccess">
         <div class="ohc-success-icon">
@@ -315,7 +338,7 @@
 </div>
 
 <script>
-  document.getElementById('ohcAppForm').addEventListener('submit', async function(e) {
+  document.getElementById('ohcSubmitBtn').addEventListener('click', async function(e) {
     e.preventDefault();
     const btn = document.getElementById('ohcSubmitBtn');
     const errorEl = document.getElementById('ohcError');
@@ -323,16 +346,23 @@
     btn.textContent = 'Sending…';
     errorEl.style.display = 'none';
 
+    const utmParams = getUtmParams();
+
     const data = {
       first_name:      document.getElementById('ohc_fname').value.trim(),
       last_name:       document.getElementById('ohc_lname').value.trim(),
       email:           document.getElementById('ohc_email').value.trim(),
-      whatsapp:        document.getElementById('whatsapp').value.trim(),
+      whatsapp:        document.getElementById('whatsapp_code').value.replace('-CA','') + ' ' + document.getElementById('whatsapp').value.trim(),
       situation:       document.getElementById('situation').value.trim(),
       outcome:         document.getElementById('outcome').value.trim(),
       become:          document.getElementById('become').value.trim(),
       tried:           document.getElementById('tried').value.trim(),
-      coaching_before: document.getElementById('coaching_before').value.trim()
+      coaching_before: document.getElementById('coaching_before').value.trim(),
+      utm_source:      utmParams.utm_source,
+      utm_medium:      utmParams.utm_medium,
+      utm_campaign:    utmParams.utm_campaign,
+      utm_content:     utmParams.utm_content,
+      upgrade_path:    new URLSearchParams(window.location.search).get('ref') || ''
     };
 
     try {
@@ -341,12 +371,27 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
-      document.getElementById('ohcAppForm').style.display = 'none';
-      document.getElementById('ohcSuccess').style.display = 'block';
+      window.location.href = 'https://ollyhenson.com/application-thank-you';
     } catch(err) {
       btn.disabled = false;
       btn.textContent = 'Submit My Application →';
       errorEl.style.display = 'block';
     }
   });
+
+  function getUtmParams() {
+    var params = new URLSearchParams(window.location.search);
+    var stored = {};
+    try { stored = JSON.parse(sessionStorage.getItem('ohc_utm') || '{}'); } catch(e) {}
+    var utm = {
+      utm_source:   params.get('utm_source')   || stored.utm_source   || '',
+      utm_medium:   params.get('utm_medium')   || stored.utm_medium   || '',
+      utm_campaign: params.get('utm_campaign') || stored.utm_campaign || '',
+      utm_content:  params.get('utm_content')  || stored.utm_content  || ''
+    };
+    try { sessionStorage.setItem('ohc_utm', JSON.stringify(utm)); } catch(e) {}
+    return utm;
+  }
+
+  getUtmParams();
 </script>

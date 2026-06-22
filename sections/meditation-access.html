@@ -113,7 +113,7 @@
   }
   .ohc-sub {
     font-size: clamp(16px, 2vw, 20px); color: #c4b5fd; line-height: 1.6;
-    max-width: 560px; margin: 0 auto 48px; position: relative; z-index: 2;
+    max-width: 420px; margin: 0 auto 48px; position: relative; z-index: 2;
   }
 
   /* ── VIDEO ── */
@@ -124,11 +124,22 @@
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 0 80px rgba(217,70,239,0.4), 0 0 160px rgba(107,33,168,0.3), 0 0 240px rgba(107,33,168,0.15);
-    aspect-ratio: 16 / 9;
     background: #0f0025;
+    height: 427px;
   }
   .ohc-video-wrap iframe {
-    width: 100%; height: 100%; border: none; display: block;
+    width: 100%; height: 100%;
+    border: none; display: block;
+  }
+  @media (max-width: 760px) {
+    .ohc-video-wrap {
+      height: 0;
+      padding-top: 56.25%;
+    }
+    .ohc-video-wrap iframe {
+      position: absolute;
+      top: 0; left: 0;
+    }
   }
   /* Placeholder shown until video URL is added */
   .ohc-video-placeholder {
@@ -153,9 +164,10 @@
   }
   .ohc-link-btn {
     display: flex; align-items: center; justify-content: center; gap: 10px;
-    width: 100%; padding: 18px 32px; box-sizing: border-box;
+    width: 100%; padding: 18px 24px; box-sizing: border-box;
     border-radius: 50px; font-family: 'Inter', sans-serif;
-    font-size: 16px; font-weight: 600; text-decoration: none;
+    font-size: clamp(13px, 3.5vw, 16px); font-weight: 600; text-decoration: none;
+    white-space: nowrap;
     transition: transform 0.2s ease, box-shadow 0.3s ease;
     cursor: pointer;
   }
@@ -191,9 +203,13 @@
   .ohc-footer-links a:hover { color: #a855f7; }
   .ohc-footer-copy { font-size: 11px; color: rgba(196,181,253,0.25); }
 
+  .ohc-break { display: none !important; }
   @media (max-width: 600px) {
     .ohc-fold { padding: 48px 20px 56px; }
     .ohc-footer { padding: 24px 20px; }
+    .ohc-break { display: block !important; }
+    .ohc-h1 { font-size: 46px !important; max-width: 400px !important; }
+    .ohc-sub { max-width: 370px !important; font-size: 15px !important; }
   }
 </style>
 
@@ -211,30 +227,21 @@
       Your Meditation<br><em>is Ready.</em>
     </h1>
 
-    <p class="ohc-sub" style="white-space:nowrap;">Press play, close your eyes and let your heart lead the way.</p>
+    <p class="ohc-sub" style="text-align:center;">Press play, close your eyes and let your heart <br class="ohc-break">lead the way.</p>
 
     <!-- VIDEO — replace src with your hosted video URL when ready -->
     <div class="ohc-video-wrap">
-      <!-- PLACEHOLDER: replace the div below with your iframe when video is ready -->
-      <!-- Example Vimeo: <iframe src="https://player.vimeo.com/video/YOUR_VIDEO_ID?autoplay=0&title=0&byline=0&portrait=0" allowfullscreen></iframe> -->
-      <!-- Example YouTube: <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe> -->
-      <div class="ohc-video-placeholder">
-        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="2"/>
-          <polygon points="26,20 26,44 46,32" fill="currentColor"/>
-        </svg>
-        <span>Meditation video coming soon</span>
-      </div>
+      <iframe src="https://www.youtube.com/embed/v58oectFiOg?rel=0&modestbranding=1" title="Heart Activation Meditation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
     <!-- LINKS -->
     <div class="ohc-links">
       <!-- PDF instructions — replace # with your hosted PDF URL -->
-      <a href="https://assets.cdn.filesafe.space/LRqVZmxns8f3xcJLHzBK/media/6a2c6d2b8a3c98ce5652963a.pdf" class="ohc-link-btn ohc-link-btn-primary" target="_blank" rel="noopener">
-        📄 Download the Practice Guide (PDF) →
+      <a href="https://ollyhenson.com/practice-guide" class="ohc-link-btn ohc-link-btn-primary" target="_blank" rel="noopener" id="ohc-pdf-btn">
+        📖 View the Practice Guide →
       </a>
       <!-- Application page -->
-      <a href="https://ollyhenson.com/coaching-application" class="ohc-link-btn ohc-link-btn-primary">
+      <a href="https://ollyhenson.com/coaching-application?ref=Applied from meditation page" class="ohc-link-btn ohc-link-btn-primary">
         The Heart Creator Program →
       </a>
     </div>
@@ -251,6 +258,17 @@
   </footer>
 
 </div>
+
+<script>
+  document.getElementById('ohc-pdf-btn').addEventListener('click', function() {
+    if (typeof gtag === 'function') {
+      gtag('event', 'practice_guide_view', {
+        event_category: 'funnel',
+        event_label: 'practice_guide'
+      });
+    }
+  });
+</script>
 
 <script
   src="https://link.kourse.com/js/external-tracking.js"

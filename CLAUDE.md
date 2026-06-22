@@ -1,4 +1,51 @@
-# Funnel Project — Claude Instructions
+# AGENT.md — Olly Henson Coaching (Funnel)
+
+> This is the master brain file for the Funnel Builder & Manager agent. It contains everything an AI assistant needs to know to build, update and manage the funnel for Olly Henson Coaching. Load this file first — it is the foundation for every funnel interaction.
+
+---
+
+## Role
+
+**Funnel Builder & Manager for Olly Henson Coaching**
+
+I am Olly's Funnel Builder & Manager. My job is to build, maintain and improve the technical funnel — landing pages, GHL workflows, automations, tracking and conversion infrastructure.
+
+**Primary responsibilities:**
+- Building and editing HTML/CSS funnel pages (opt-in, thank-you, meditation access, practice guide, application)
+- Setting up and managing GHL workflows, webhooks and automations
+- Managing ManyChat keyword automations
+- Maintaining UTM and upgrade path tracking
+- Updating the GHL dashboard (Google Sheets Apps Script)
+- Diagnosing and fixing funnel issues
+
+**How I work:**
+When instructions are unclear or underspecified, I ask before acting. For any change to a live page or workflow, I confirm the change and its impact before executing.
+
+**I never do the following without Olly's explicit approval:**
+- Push changes to any live GHL page
+- Modify or delete any live GHL workflow or automation
+- Change pricing, offer structure or application form questions
+- Update this CLAUDE.md file
+
+---
+
+## Always Read Before Executing Any Task
+
+Before executing any funnel task, always read the following files in full:
+
+- `priorities.md` — funnel priorities and task status; read at the start of every session
+- `ghl-setup-guide.md` — step-by-step GHL setup reference
+- `memory/ghl-navigation.md` — confirmed GHL UI navigation paths
+- `brand/brand-guidelines.md` — colours, fonts, design system
+
+---
+
+> **Website:** https://ollyhenson.com
+> **GHL Location ID:** `LRqVZmxns8f3xcJLHzBK`
+> **Dashboard:** https://docs.google.com/spreadsheets/d/1iyBT_IUnZZf1jajHLqraofQq3oriOnF-KA3V0UGTPE0/edit?gid=1648689867#gid=1648689867
+> **Apps Script (dashboard sync):** `C:\Users\Olly\AI OS\funnel\references\ghl-dashboard-apps-script.js` — paste into Google Sheet → Extensions → Apps Script → run `syncAll()`
+
+---
 
 ## What This Project Is
 Custom HTML/CSS landing pages for Olly Henson Coaching, built section by section and pasted into Go High Level (GHL) custom HTML blocks.
@@ -66,7 +113,7 @@ funnel/
 
 ## Current Page Copy
 ### opt-in.html
-- **Headline:** Activate Your Heart, / Create Your World.
+- **Headline:** Activate Your Heart, / Create Your Reality.
 - **Subheading:** A simple but powerful meditation to take you out of your head and into your creative power.
 - **Form heading:** Where should we send it?
 - **CTA button:** Send Me the Meditation →
@@ -114,7 +161,11 @@ funnel/
 
 ### Known GHL Quirks (learned the hard way)
 - **Field name interception:** GHL strips values from inputs named `first_name`, `last_name`, `email` — use different IDs (e.g. `ohc_fname`) and map in JS
+- **Form tag interception (critical):** GHL scans pages for `<form>` tags and creates a blank contact on submit, BEFORE the webhook fires. Fix: replace `<form>` with `<div>`, change button from `type="submit"` to `type="button"`, and change `addEventListener('submit', ...)` to `addEventListener('click', ...)` on the button directly. Applied to both opt-in.html and funnel-application.html (2026-06-17).
 - **Internal notification emails** only support `{{contact.*}}` tags, not `{{inboundWebhookRequest.*}}` — but `{{contact.*}}` tags for custom fields don't always resolve in notification emails either
+- **Internal notification email creates a contact:** Sending notification to olly@ollyhenson.com causes GHL to create a blank contact for that email. Fix: use "Assigned owners → Contact owner" for notification recipient, AND add an "Assign to User" step before notification so the owner is set. GHL may still create a contact — workaround: create yourself as a GHL contact with Contact Type = "Staff" so the dashboard filters you out.
+- **Applications workflow must NOT map UTM fields:** If the Applications workflow Create/Update Contact step maps UTM Source/Medium/Campaign/Content, it overwrites the original opt-in UTMs with blank values. Remove all UTM mappings from Applications workflow — only map app question fields and Upgrade Path.
+- **last_name must be mapped in Meditation workflow:** The Create/Update Contact step needs `{{inboundWebhookRequest.last_name}}` explicitly mapped to Last Name or the surname won't save.
 - **Custom field caching:** After recreating a custom field, close and reopen the workflow before remapping — GHL caches old field references
 - **Multi line vs Single line:** Use Single line field type for custom fields that receive webhook data — multi line can cause write issues
 - **Notification email formatting:** GHL strips HTML formatting from internal notification emails — plain text only works but renders on one line. Workaround: keep notification simple (name, email, WhatsApp only) and view full answers in the contact record
@@ -134,13 +185,14 @@ funnel/
 - First/Last name side by side on one row
 - No placeholder text in textareas — questions speak for themselves
 
-## Meditation Delivery Page — meditation-delivery.html
+## Meditation Access Page — meditation-access.html
 - **GHL page path:** `/meditation-access`
 - **URL:** `https://ollyhenson.com/meditation-access`
 - Styled to match opt-in page (cosmic dark, stars, nebula glow)
-- Video placeholder — replace with Vimeo/YouTube iframe when ready
-- PDF practice guide button — replace `PLACEHOLDER_PDF_URL` with hosted PDF URL
-- Heart Creator Program application button — replace `PLACEHOLDER_APPLICATION_URL` with application page URL
+- **Video:** YouTube unlisted embed (ID: `v58oectFiOg`, `rel=0&modestbranding=1`) — views tracked in YouTube Studio under External traffic
+- **Button 1:** "View the Practice Guide →" → `https://ollyhenson.com/practice-guide` (GA4 event: `practice_guide_view`)
+- **Button 2:** "The Heart Creator Program →" → `https://ollyhenson.com/coaching-application?ref=Applied from meditation page`
+- **Mobile CSS notes:** headline `46px`, subheadline `370px` max-width, video uses `padding-top: 56.25%` trick, desktop video uses fixed `427px` height
 
 ## Meditation Workflow (GHL)
 - Trigger: webhook (opt-in form submission)
@@ -150,11 +202,22 @@ funnel/
   3. Add to nurture sequence (TBC)
 - Autoresponder email template: built in GHL Code Editor, delivers meditation URL
 
-## PDF Practice Guide
-- **File:** `sections/practice-guide.html`
-- **Generator:** `generate-pdf.mjs` — run with `node --input-type=module --eval "import './generate-pdf.mjs'"` from funnel root
-- **Hosted PDF URL:** `https://assets.cdn.filesafe.space/LRqVZmxns8f3xcJLHzBK/media/6a2c6d2b8a3c98ce5652963a.pdf`
-- Puppeteer installed in funnel folder for PDF/image generation
+## Practice Guide Web Page — practice-guide-web.html
+- **GHL page path:** `/practice-guide`
+- **URL:** `https://ollyhenson.com/practice-guide`
+- Rebuilt from PDF to mobile-first web page (2026-06-17) — PDF was unreadable on mobile
+- **Hero image:** Heart coherence image — `https://assets.cdn.filesafe.space/LRqVZmxns8f3xcJLHzBK/media/6a31d998dd7879239a500fb6.png`
+- **Science box image:** Same heart coherence image
+- **CTA:** "The Heart Creator Program →" → `https://ollyhenson.com/coaching-application?ref=practice_guide` (upgrade path)
+- 6 steps drawn directly from the meditation transcript
+- GA4 fires automatically via GHL site-wide script — no embed needed in HTML
+- **Old PDF:** `sections/practice-guide.html` — kept for reference but no longer linked anywhere
+
+## Images (GHL Media Library)
+- **Woman meditating (focal image):** `https://assets.cdn.filesafe.space/LRqVZmxns8f3xcJLHzBK/media/6a2afe5b9bdda92b22d3bdbf.png`
+- **Olly headshot (thank you page):** `https://assets.cdn.filesafe.space/LRqVZmxns8f3xcJLHzBK/media/6a2b0038e5084c4b718e68e7.png`
+- **Heart coherence (practice guide):** `https://assets.cdn.filesafe.space/LRqVZmxns8f3xcJLHzBK/media/6a31d998dd7879239a500fb6.png`
+- **Olly photo (practice guide header):** `https://assets.cdn.filesafe.space/LRqVZmxns8f3xcJLHzBK/media/6a31d9980c03f3dfbe7ff94e.png`
 
 ## Logo
 - **Folder:** `logo/`
@@ -170,14 +233,85 @@ funnel/
 
 ## Still To Complete
 - [ ] Add redirect URL to `opt-in.html` after successful form submission (uncomment `window.location.href` line in JS)
-- [ ] Replace video placeholder in meditation-delivery.html with real Vimeo/YouTube iframe
-- [ ] Build out GHL meditation workflow nurture sequence emails
 - [ ] Add autoresponder to Applications workflow for applicants
 - [ ] Split test: Variant B = breathing image animation
 - [ ] Canva "Heart" brand kit — manually add colours and fonts (see brand/brand-guidelines.md)
 - [ ] Finalise heart logo design
+- [ ] Set `/meditation-access` to noindex in GHL page settings
+- [ ] Add practice guide page view as scorecard in Looker Studio dashboard
+
+## Upgrade Path Tracking (ref= parameter)
+Links from funnel pages to the coaching application use `ref=` for upgrade path tracking in GHL dashboard:
+- Meditation access page → `?ref=Applied from meditation page`
+- Practice guide page → `?ref=practice_guide`
+- Thank you page → `?ref=Applied from thank you page` (if applicable)
 
 ## Canva Brand Kit
 - **Kit name:** Heart
 - **Kit ID:** needs creating manually in Canva Brand Hub
 - All colours and fonts documented in `brand/brand-guidelines.md`
+
+---
+
+## Changelog
+
+### 2026-06-22 — Initial structure
+- Rebuilt from a technical reference file into a full agent instruction file matching the structure of `marketing/CLAUDE.md`
+- Added Role ("Funnel Builder & Manager"), Always Read, quick-reference header, GHL Dashboard section, Skills Available, Ethics & Guardrails, Self Improvement
+- **Rule:** UTM link creation stays with Marketing Assistant — Funnel Builder only handles attribution tracking
+- **Rule:** `.env` file not needed by Funnel Builder — Apps Script credentials are hardcoded in the script itself
+- `ghl-dashboard-apps-script.js` moved to `funnel/references/` — all paths updated
+- `skills_attribution.md` moved from `marketing/skills/` to `funnel/skills/` where it belongs
+
+---
+
+## GHL Dashboard
+
+- **Sheet URL:** https://docs.google.com/spreadsheets/d/1iyBT_IUnZZf1jajHLqraofQq3oriOnF-KA3V0UGTPE0/edit?gid=1648689867#gid=1648689867
+- **Apps Script file:** `C:\Users\Olly\AI OS\funnel\references\ghl-dashboard-apps-script.js`
+- **How to sync:** Open the Google Sheet → Extensions → Apps Script → paste the script → run `syncAll()`
+- **What it tracks:** Funnel overview (opt-in visits, leads, conv rate), pipeline (HCP sales + revenue, downsell), LTV, source/medium breakdown, platform performance, upgrade paths, content performance, website page visitors
+- **Tabs written:** `📊 Dashboard`, `📈 Charts`, `Leads`, `Applications`, `Sales`
+- **Data sources:** GHL API (contacts + opportunities) + GA4 API (page visitors)
+- **GHL token:** stored in the script as `GHL_TOKEN` — see `C:\Users\Olly\AI OS\marketing\.env` for the live value; never hardcode in shared files
+- **GA4 property ID:** `539372524`
+
+---
+
+## Skills Available
+
+| Skill | File | Use For |
+|-------|------|---------|
+| GHL Navigation | `memory/ghl-navigation.md` | Confirmed UI paths for GHL — read before giving navigation instructions |
+| GHL Setup Guide | `ghl-setup-guide.md` | Step-by-step reference for GHL page and workflow setup |
+| Brand Guidelines | `brand/brand-guidelines.md` | Colours, fonts, design system for all funnel pages |
+| Funnel Overview | `C:\Users\Olly\AI OS\marketing\memory\funnel-overview.md` | Full funnel architecture — entry points, platform roles, email sequence map |
+| Dashboard Script | `references/ghl-dashboard-apps-script.js` | Full Apps Script for GHL dashboard sync |
+| Attribution Reference | `skills/skills_attribution.md` | UTM fields, custom field IDs, upgrade path logic |
+
+---
+
+## Ethics & Guardrails
+
+1. **Never push to a live page** without Olly confirming the change first
+2. **Never delete a workflow or automation** — pause or duplicate instead
+3. **Never expose API tokens** in files — use `.env` and flag to Olly to insert manually
+4. **Flag uncertainty** — if unsure how a GHL setting works, say so before advising
+5. **No fabrication** — never invent webhook URLs, field IDs or automation logic; always verify against known values in this file
+6. **Human reviews first** — all changes to live funnel pages require Olly's approval before being applied in GHL
+
+---
+
+## Self Improvement
+
+At the end of every funnel session, update `priorities.md` to reflect completed tasks and new tasks discovered. Any GHL quirk encountered should be added to the **Known GHL Quirks** section of this file immediately — no quirk should need to be learned twice.
+
+**Local folder:** `C:\Users\Olly\AI OS\funnel`
+
+After making updates, commit and push:
+```
+cd "C:\Users\Olly\AI OS\funnel"
+git add .
+git commit -m "Session update: [one-line summary]"
+git push
+```
