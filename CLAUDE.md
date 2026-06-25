@@ -169,6 +169,10 @@ funnel/
 - **Custom field caching:** After recreating a custom field, close and reopen the workflow before remapping — GHL caches old field references
 - **Multi line vs Single line:** Use Single line field type for custom fields that receive webhook data — multi line can cause write issues
 - **Notification email formatting:** GHL strips HTML formatting from internal notification emails — plain text only works but renders on one line. Workaround: keep notification simple (name, email, WhatsApp only) and view full answers in the contact record
+- **Condition AND vs OR — multiple tags in one segment:** When you add multiple tags to a single condition segment, GHL uses AND logic — ALL tags must be present. To check if a contact has ANY ONE of several tags, use separate segments joined by OR (one tag per segment). This is the correct pattern for "stop sequence if contact is an applicant OR client OR community member."
+- **"Does not include" with multiple tags:** "Does not include" in a single segment also uses AND — meaning ALL listed tags must be absent. To stop the sequence if the contact has ANY of the tags, use separate "Does not include" segments joined by OR (one tag per segment).
+- **None branch is automatic — never configure it:** The None branch means "when none of the above branch conditions are met." It requires no setup. Do not try to add conditions to it. Use it as the catch-all for contacts who fail the branch check.
+- **Correct nurture sequence gate pattern:** After each Wait step, use a condition with: Branch = "has meditation download AND not a heart creator tag holder" → send next email. None → END. This ensures applicants/clients/community members stop receiving the nurture sequence automatically.
 
 ### Application Questions
 1. Tell me about your current situation. What are you looking to change?
@@ -254,6 +258,11 @@ Links from funnel pages to the coaching application use `ref=` for upgrade path 
 ---
 
 ## Changelog
+
+### 2026-06-25 — GHL workflow condition logic
+- Added 4 new Known GHL Quirks covering: AND vs OR in multi-tag conditions; "Does not include" logic; None branch behaviour; correct nurture sequence gate pattern
+- Lesson: GHL condition segments always use AND internally — separate segments are needed to get OR behaviour across tags
+- Lesson: None branch is automatic and requires no configuration — never attempt to add conditions to it
 
 ### 2026-06-22 — Initial structure
 - Rebuilt from a technical reference file into a full agent instruction file matching the structure of `marketing/CLAUDE.md`
