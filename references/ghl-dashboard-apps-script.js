@@ -210,13 +210,19 @@ function syncAll() {
     }).reduce((sum, o) => sum + (o.monetaryValue || 0), 0);
   }
 
-  const loomCounts    = pipelineByPeriod("Loom Video Sent");
-  const hcpCounts     = pipelineByPeriod("Joined HCP");
-  const downsellCounts = pipelineByPeriod("Offered Community");
-  const dsSaleCounts  = pipelineByPeriod("Joined Community");
+  // Loom count uses tag so contacts are counted even after moving past that pipeline stage
+  const allLooms  = contacts.filter(c => (c.tags || []).some(t => t.toLowerCase().includes("loom sent")));
+  const loomCounts = countByPeriods(allLooms, c => c.dateAdded);
+  const allOffers     = contacts.filter(c => (c.tags || []).some(t => t.toLowerCase().includes("offer sent")));
+  const allOneToOnes  = contacts.filter(c => (c.tags || []).some(t => t.toLowerCase().includes("heart creator 1-2-1")));
+  const allCommunity  = contacts.filter(c => (c.tags || []).some(t => t.toLowerCase().includes("heart creator community")));
 
-  const hcpRevenue    = { today: revenueByPeriod("Joined HCP", todayStart), week: revenueByPeriod("Joined HCP", weekStart), month: revenueByPeriod("Joined HCP", monthStart), year: revenueByPeriod("Joined HCP", yearStart), all: (stageMap["Joined HCP"] || {}).revenue || 0 };
-  const dsRevenue     = { today: revenueByPeriod("Joined Community", todayStart), week: revenueByPeriod("Joined Community", weekStart), month: revenueByPeriod("Joined Community", monthStart), year: revenueByPeriod("Joined Community", yearStart), all: (stageMap["Joined Community"] || {}).revenue || 0 };
+  const offerCounts     = countByPeriods(allOffers,    c => c.dateAdded);
+  const oneToOneCounts  = countByPeriods(allOneToOnes, c => c.dateAdded);
+  const communityCounts = countByPeriods(allCommunity, c => c.dateAdded);
+
+  const oneToOneRevenue  = { today: revenueByPeriod("Joined 1-2-1", todayStart), week: revenueByPeriod("Joined 1-2-1", weekStart), month: revenueByPeriod("Joined 1-2-1", monthStart), year: revenueByPeriod("Joined 1-2-1", yearStart), all: (stageMap["Joined 1-2-1"] || {}).revenue || 0 };
+  const communityRevenue = { today: revenueByPeriod("Joined Community", todayStart), week: revenueByPeriod("Joined Community", weekStart), month: revenueByPeriod("Joined Community", monthStart), year: revenueByPeriod("Joined Community", yearStart), all: (stageMap["Joined Community"] || {}).revenue || 0 };
 
   // ── Email → attribution lookup ────────────────────────────────────────────
   const emailToAttr = {};
@@ -419,8 +425,7 @@ function syncAll() {
   buildDashboard({
     leadCounts, appCounts, saleCounts,
     medVisits, appVisits,
-    loomCounts, hcpCounts, hcpRevenue,
-    downsellCounts, dsSaleCounts, dsRevenue,
+    loomCounts, offerCounts, oneToOneCounts, oneToOneRevenue, communityCounts, communityRevenue,
     ltvCustomers, ltvTotal, ltvAverage,
     sourceMapAll, sourceMapYear, sourceMapMonth, sourceMapWeek, sourceMapToday,
     platformAll, platformYear, platformMonth, platformWeek, platformToday,
@@ -476,24 +481,30 @@ function buildDashboard(d) {
 
   // ── PIPELINE ──────────────────────────────────────────────────────────────
   row++;
-  sectionHeader(sh, row, "PIPELINE — HCP"); row += 2;
+  sectionHeader(sh, row, "PIPELINE — OVERVIEW"); row += 2;
   periodHeaders(sh, row); row++;
 
-  var lc2 = d.loomCounts, hc = d.hcpCounts, hr = d.hcpRevenue, ac2 = d.appCounts;
+  var lc2 = d.loomCounts, oc = d.offerCounts, ac2 = d.appCounts;
   metricRowMulti(sh, row, "Loom Videos Sent",  [lc2.today, lc2.week, lc2.month, lc2.year, lc2.all], C.green); row += 3;
-  metricRowMulti(sh, row, "HCP Sales",         [hc.today, hc.week, hc.month, hc.year, hc.all], C.green); row += 3;
-  metricRowMulti(sh, row, "HCP Revenue",       ["£"+hr.today, "£"+hr.week, "£"+hr.month, "£"+hr.year, "£"+hr.all], C.green); row += 3;
-  metricRowMulti(sh, row, "HCP Conv Rate",     [conv(hc.today,ac2.today), conv(hc.week,ac2.week), conv(hc.month,ac2.month), conv(hc.year,ac2.year), conv(hc.all,ac2.all)], C.green); row += 3;
+  metricRowMulti(sh, row, "Offers Sent",        [oc.today, oc.week, oc.month, oc.year, oc.all], C.green); row += 3;
 
   row++;
-  sectionHeader(sh, row, "PIPELINE — DOWNSELL"); row += 2;
+  sectionHeader(sh, row, "PIPELINE — 1-2-1 ($2,500)"); row += 2;
   periodHeaders(sh, row); row++;
 
-  var dc = d.downsellCounts, ds = d.dsSaleCounts, dr = d.dsRevenue;
-  metricRowMulti(sh, row, "Downsell Offers",   [dc.today, dc.week, dc.month, dc.year, dc.all], C.yellow); row += 3;
-  metricRowMulti(sh, row, "Downsell Sales",    [ds.today, ds.week, ds.month, ds.year, ds.all], C.yellow); row += 3;
-  metricRowMulti(sh, row, "Downsell Revenue",  ["£"+dr.today, "£"+dr.week, "£"+dr.month, "£"+dr.year, "£"+dr.all], C.yellow); row += 3;
-  metricRowMulti(sh, row, "Downsell Conv Rate",[conv(ds.today,dc.today), conv(ds.week,dc.week), conv(ds.month,dc.month), conv(ds.year,dc.year), conv(ds.all,dc.all)], C.yellow); row += 3;
+  var otoc = d.oneToOneCounts, otor = d.oneToOneRevenue;
+  metricRowMulti(sh, row, "1-2-1 Sales",    [otoc.today, otoc.week, otoc.month, otoc.year, otoc.all], C.green); row += 3;
+  metricRowMulti(sh, row, "1-2-1 Revenue",  ["£"+otor.today, "£"+otor.week, "£"+otor.month, "£"+otor.year, "£"+otor.all], C.green); row += 3;
+  metricRowMulti(sh, row, "1-2-1 Conv Rate",[conv(otoc.today,oc.today), conv(otoc.week,oc.week), conv(otoc.month,oc.month), conv(otoc.year,oc.year), conv(otoc.all,oc.all)], C.green); row += 3;
+
+  row++;
+  sectionHeader(sh, row, "PIPELINE — COMMUNITY ($997)"); row += 2;
+  periodHeaders(sh, row); row++;
+
+  var cc = d.communityCounts, cr = d.communityRevenue;
+  metricRowMulti(sh, row, "Community Sales",    [cc.today, cc.week, cc.month, cc.year, cc.all], C.yellow); row += 3;
+  metricRowMulti(sh, row, "Community Revenue",  ["£"+cr.today, "£"+cr.week, "£"+cr.month, "£"+cr.year, "£"+cr.all], C.yellow); row += 3;
+  metricRowMulti(sh, row, "Community Conv Rate",[conv(cc.today,oc.today), conv(cc.week,oc.week), conv(cc.month,oc.month), conv(cc.year,oc.year), conv(cc.all,oc.all)], C.yellow); row += 3;
 
   // ── LTV ───────────────────────────────────────────────────────────────────
   row++;

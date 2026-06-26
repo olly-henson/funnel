@@ -169,6 +169,37 @@ When a contact applies, the correct actions are:
 
 Never remove "meditation download" tag on application — it breaks lead attribution.
 
+### Pipeline stage counts are unreliable — always use tags
+The `pipelineByPeriod()` function filters by a contact's **current** pipeline stage. Once a contact moves forward (e.g. from "Loom Video Sent" to "Offer Sent"), they disappear from the previous stage count. This makes historical counts wrong.
+
+**Rule:** Never use `pipelineByPeriod()` to count pipeline activity. Always use a tag-based count via `contacts.filter(c => c.tags...)` instead. Tags persist permanently on the contact regardless of pipeline movement.
+
+**Rule:** Every pipeline stage must have a corresponding tag. When a contact reaches a stage, add the tag manually (or via workflow). The tag is the source of truth for the dashboard count.
+
+**Current pipeline tags (as of 2026-06-26):**
+| Stage | Tag |
+|---|---|
+| Application Received | heart creator applicant |
+| Loom Video Sent | loom sent |
+| Offer Sent | offer sent |
+| Joined 1-2-1 | heart creator 1-2-1 |
+| Joined Community | heart creator community |
+| Lost | lost |
+
+### Revenue vs membership counts may diverge
+Community members who joined for free (e.g. during setup/testing) will have the "heart creator community" tag but £0 monetary value on their opportunity. This causes the Community Sales count and Community Revenue to diverge.
+
+**Rule:** This is expected behaviour — do not try to fix it in the script. Revenue reflects what was actually charged. If a member is genuinely free, their £0 is correct.
+
+**Rule:** When a paying member joins, always set the monetary value on their GHL opportunity (£2,500 for 1-2-1, £997 for Community) before moving them to the relevant pipeline stage. Revenue pulls from `monetaryValue` on the opportunity record.
+
+### Current pipeline structure and prices (as of 2026-06-26)
+- Pipeline stages: Application Received → Loom Video Sent → Offer Sent → Joined 1-2-1 → Joined Community → Lost
+- 1-2-1 price: $2,500
+- Community price: $997
+- Dashboard sections: Pipeline Overview (Looms + Offers), Pipeline 1-2-1, Pipeline Community
+- Conv rate for sales is calculated against Offers Sent (not Applications), since the offer goes out after the Loom call
+
 ### Pages to exclude from website tracking
 The following preview pages are excluded from the Website Pages section of the dashboard via the `EXCLUDED_PAGES` array in the script:
 - All `/preview/` paths listed in the script
@@ -193,6 +224,14 @@ The following preview pages are excluded from the Website Pages section of the d
 - **Rule added:** The `.env` file does not travel with the Apps Script. The Apps Script has credentials hardcoded directly; `.env` is only needed by Node.js terminal scripts in the marketing folder.
 - **Path updated:** `ghl-dashboard-apps-script.js` moved from `marketing/` to `funnel/references/` — all path references updated accordingly.
 - **Cross-reference fixed:** UTM parameter system section now points to the correct path for `skills_utm-links.md` in the marketing folder, with a note that it's a Marketing Assistant task.
+
+### 2026-06-26 — pipeline tag rules + offer structure update
+- **Rule added:** Never use `pipelineByPeriod()` for dashboard counts — contacts leave the stage when they progress, breaking historical counts. Use tag-based filtering instead.
+- **Rule added:** Every pipeline stage needs a corresponding tag; tag is the source of truth for all dashboard counts.
+- **Rule added:** Revenue and membership counts will diverge for free/test members — this is expected, not a bug.
+- **Rule added:** Always set monetary value on the GHL opportunity when a paying member joins.
+- **Updated:** Pipeline structure changed from HCP/Downsell to 1-2-1 ($2,500) and Community ($997) as equal offers. Old stage names ("Joined HCP", "Offered Community") removed from script and replaced with "Joined 1-2-1", "Offer Sent", "Joined Community".
+- **Updated:** Conv rate now calculated against Offers Sent (not Applications).
 
 ### 2026-06-22 (session 1 — dashboard rules)
 - Added GA4 timezone bug section — `ga4DateStr()` resolves BST dates one day early in UTC; fix is to hardcode `"2026-06-17"` for month/year/all-time GA4 calls
