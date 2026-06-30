@@ -29,6 +29,23 @@ When instructions are unclear or underspecified, I ask before acting. For any ch
 
 ---
 
+## Quick Reference — Section HTML Files
+
+All live page HTML is in `C:\Users\Olly\AI OS\funnel\sections\`. Read the relevant file immediately when any copy or design edit is requested — do not ask Olly for the content.
+
+| File | GHL Page | URL |
+|------|----------|-----|
+| `opt-in.html` | `/meditation` | https://ollyhenson.com/meditation |
+| `thank-you.html` | `/thank-you` | https://ollyhenson.com/thank-you |
+| `meditation-access.html` | `/meditation-access` | https://ollyhenson.com/meditation-access |
+| `practice-guide-web.html` | `/practice-guide` | https://ollyhenson.com/practice-guide |
+| `funnel-application.html` | `/coaching-application` | https://ollyhenson.com/coaching-application |
+| `application-thank-you.html` | `/application-thank-you` | https://ollyhenson.com/application-thank-you |
+
+**After any edit:** confirm the change in chat, then remind Olly to re-paste the updated file into GHL.
+
+---
+
 ## Always Read Before Executing Any Task
 
 Before executing any funnel task, always read the following files in full:
@@ -70,7 +87,7 @@ funnel/
 - **Funnel page path:** `/meditation`
 - **Thank you page path:** `/thank-you`
 - **Form ID:** `inmmplT2BZ` (native GHL form — not used directly)
-- **Webhook URL:** `https://services.leadconnectorhq.com/hooks/LRqVZmxns8f3xcJLHzBK/webhook-trigger/34c004b7-3a84-43b2-a783-4e24f0675388`
+- **Webhook URL:** `https://services.leadconnectorhq.com/hooks/LRqVZmxns8f3xcJLHzBK/webhook-trigger/QNu0d7RU7RwtabcD1aQo`
 
 ## How It Works
 - The visible form is custom HTML/CSS — it looks great and is fully styled
@@ -166,13 +183,15 @@ funnel/
 - **Internal notification email creates a contact:** Sending notification to olly@ollyhenson.com causes GHL to create a blank contact for that email. Fix: use "Assigned owners → Contact owner" for notification recipient, AND add an "Assign to User" step before notification so the owner is set. GHL may still create a contact — workaround: create yourself as a GHL contact with Contact Type = "Staff" so the dashboard filters you out.
 - **Applications workflow must NOT map UTM fields:** If the Applications workflow Create/Update Contact step maps UTM Source/Medium/Campaign/Content, it overwrites the original opt-in UTMs with blank values. Remove all UTM mappings from Applications workflow — only map app question fields and Upgrade Path.
 - **last_name must be mapped in Meditation workflow:** The Create/Update Contact step needs `{{inboundWebhookRequest.last_name}}` explicitly mapped to Last Name or the surname won't save.
+- **GHL AI regenerates webhook URLs:** If you use GHL's built-in AI assistant to edit the Meditation workflow, it may delete and recreate the webhook trigger, generating a new URL. After any GHL AI edits, check the Inbound Webhook trigger block and compare the URL to the one hardcoded in `opt-in.html`. If they differ, update `opt-in.html` and re-paste into GHL.
 - **Custom field caching:** After recreating a custom field, close and reopen the workflow before remapping — GHL caches old field references
 - **Multi line vs Single line:** Use Single line field type for custom fields that receive webhook data — multi line can cause write issues
 - **Notification email formatting:** GHL strips HTML formatting from internal notification emails — plain text only works but renders on one line. Workaround: keep notification simple (name, email, WhatsApp only) and view full answers in the contact record
 - **Condition AND vs OR — multiple tags in one segment:** When you add multiple tags to a single condition segment, GHL uses AND logic — ALL tags must be present. To check if a contact has ANY ONE of several tags, use separate segments joined by OR (one tag per segment). This is the correct pattern for "stop sequence if contact is an applicant OR client OR community member."
-- **"Does not include" with multiple tags:** "Does not include" in a single segment also uses AND — meaning ALL listed tags must be absent. To stop the sequence if the contact has ANY of the tags, use separate "Does not include" segments joined by OR (one tag per segment).
+- **"Does not include" with multiple tags — use AND not OR:** To stop the sequence if a contact has ANY ONE of several excluded tags, use separate "Does not include" segments joined by **AND** (one tag per segment). Using OR is WRONG — OR means the condition passes if the contact is missing ANY one tag, which is almost always true. Example: for Tom who has "heart creator applicant" but not the other two excluded tags, (not 1-2-1) OR (not community) OR (not applicant) = TRUE OR TRUE OR FALSE = TRUE — he incorrectly gets the email. With AND: TRUE AND TRUE AND FALSE = FALSE — he correctly goes to None → END.
+- **Alternatively:** Put all excluded tags in a single "Does not include" segment. GHL's AND logic within a single segment means ALL must be absent — which is exactly the desired behaviour (send only if contact has none of the excluded tags).
 - **None branch is automatic — never configure it:** The None branch means "when none of the above branch conditions are met." It requires no setup. Do not try to add conditions to it. Use it as the catch-all for contacts who fail the branch check.
-- **Correct nurture sequence gate pattern:** After each Wait step, use a condition with: Branch = "has meditation download AND not a heart creator tag holder" → send next email. None → END. This ensures applicants/clients/community members stop receiving the nurture sequence automatically.
+- **Correct nurture sequence gate pattern:** After each Wait step, use a condition with: Branch = "Tags includes meditation download AND Tags does not include heart creator 1-2-1 AND Tags does not include heart creator community AND Tags does not include heart creator applicant" (all segments joined by AND) → send next email. None → END. This ensures applicants/clients/community members stop receiving the nurture sequence automatically.
 
 ### Application Questions
 1. Tell me about your current situation. What are you looking to change?
@@ -258,6 +277,16 @@ Links from funnel pages to the coaching application use `ref=` for upgrade path 
 ---
 
 ## Changelog
+
+### 2026-06-30 — funnel-application.html subheadline updated
+- Removed opening line "Work with me 1-2-1 to unlock the power of your heart and become the creator of your own reality."
+- Updated outcome line from "you will be able to shift your reality in whatever direction you wish" to "you'll be able to access your subconscious mind, feel your future as real and create conscious change in your reality."
+- Added Quick Reference section at top of CLAUDE.md with all section file paths, GHL page paths and live URLs
+
+### 2026-06-26 — Fixed wrong "Does not include" quirk in CLAUDE.md
+- **Corrected a critical error:** Previous quirk said to join "Does not include" segments with OR — this is WRONG. OR between "Does not include" segments means the condition passes if the contact is missing ANY one excluded tag, which is almost always true. Fixed: use AND between all "Does not include" segments (or put all excluded tags in a single segment).
+- Root cause: the OR advice was logically inverted. The correct pattern is AND for exclusions, OR for inclusions.
+- Tom Davis (has "heart creator applicant") was passing through the gate and receiving nurture emails because of this bug.
 
 ### 2026-06-25 — GHL workflow condition logic
 - Added 4 new Known GHL Quirks covering: AND vs OR in multi-tag conditions; "Does not include" logic; None branch behaviour; correct nurture sequence gate pattern
